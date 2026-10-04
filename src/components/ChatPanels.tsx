@@ -103,21 +103,20 @@ export const ChatPanels: React.FC = () => {
             border: "1px solid #d1d5db",
             borderRadius: "4px",
           }}
+        />
+        <button
+          onClick={handleSend}
+          style={{
+            padding: "8px 14px",
+            background: "#2563eb",
+            color: "#fff",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+          }}
         >
-          <button
-            onClick={handleSend}
-            style={{
-              padding: "8px 14px",
-              background: "#2563eb",
-              color: "#fff",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-            }}
-          >
-            发送
-          </button>
-        </input>
+          发送
+        </button>
       </div>
     </aside>
   );
