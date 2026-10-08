@@ -6,7 +6,15 @@ interface Message {
   text: string;
 }
 
-export const ChatPanels: React.FC = () => {
+interface ChatPanelsProps {
+  isProcessing: boolean;
+  onProcessingChange: (status: boolean) => void;
+}
+
+export const ChatPanels: React.FC<ChatPanelsProps> = ({
+  isProcessing,
+  onProcessingChange,
+}) => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const [messages, setMessages] = useState<Message[]>([
@@ -23,7 +31,7 @@ export const ChatPanels: React.FC = () => {
   }, [messages]);
 
   const handleSend = () => {
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim() || isProcessing) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -34,6 +42,8 @@ export const ChatPanels: React.FC = () => {
     setMessages((prev) => [...prev, userMessage]);
     setInputValue("");
 
+    onProcessingChange(true);
+
     setTimeout(() => {
       const agentMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -41,6 +51,7 @@ export const ChatPanels: React.FC = () => {
         text: `已收到指令: "${userMessage.text}"`,
       };
       setMessages((prev) => [...prev, agentMessage]);
+      onProcessingChange(false);
     }, 600);
   };
 
@@ -101,6 +112,7 @@ export const ChatPanels: React.FC = () => {
         <input
           type="text"
           value={inputValue}
+          disabled={isProcessing}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
           placeholder="输入修图指令..."
@@ -113,6 +125,7 @@ export const ChatPanels: React.FC = () => {
         />
         <button
           onClick={handleSend}
+          disabled={isProcessing}
           style={{
             padding: "8px 14px",
             background: "#2563eb",

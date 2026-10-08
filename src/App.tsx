@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { CanvasArea } from "./components/CanvasArea";
 import { ChatPanels } from "./components/ChatPanels";
 import { Header } from "./components/Header";
 
 function App() {
+  const [isProcessing, setIsProcessing] = useState(false);
+
   return (
     <div
       style={{
@@ -14,8 +17,11 @@ function App() {
     >
       <Header title="AI Retouch Studio" />
       <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
-        <CanvasArea />
-        <ChatPanels />
+        <CanvasArea isProcessing={isProcessing} />
+        <ChatPanels
+          isProcessing={isProcessing}
+          onProcessingChange={setIsProcessing}
+        />
       </div>
     </div>
   );
