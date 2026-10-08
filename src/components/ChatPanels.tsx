@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 interface Message {
   id: string;
@@ -7,6 +7,8 @@ interface Message {
 }
 
 export const ChatPanels: React.FC = () => {
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -15,6 +17,10 @@ export const ChatPanels: React.FC = () => {
     },
   ]);
   const [inputValue, setInputValue] = useState<string>("");
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const handleSend = () => {
     if (!inputValue.trim()) return;
@@ -82,6 +88,7 @@ export const ChatPanels: React.FC = () => {
             {msg.text}
           </div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
       <div
         style={{
