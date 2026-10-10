@@ -1,10 +1,9 @@
 import React from "react";
+import { useEditorStore } from "../store/useEditorStore";
 
-interface CanvasAreaProps {
-  isProcessing: boolean;
-}
+export const CanvasArea: React.FC = () => {
+  const isProcessing = useEditorStore((state) => state.isProcessing);
 
-export const CanvasArea: React.FC<CanvasAreaProps> = ({ isProcessing }) => {
   return (
     <main
       style={{

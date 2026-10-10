@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useEditorStore } from "../store/useEditorStore";
 
 interface Message {
   id: string;
@@ -6,15 +7,10 @@ interface Message {
   text: string;
 }
 
-interface ChatPanelsProps {
-  isProcessing: boolean;
-  onProcessingChange: (status: boolean) => void;
-}
+export const ChatPanels: React.FC = () => {
+  const isProcessing = useEditorStore((state) => state.isProcessing);
+  const setIsProcessing = useEditorStore((state) => state.setIsProcessing);
 
-export const ChatPanels: React.FC<ChatPanelsProps> = ({
-  isProcessing,
-  onProcessingChange,
-}) => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const [messages, setMessages] = useState<Message[]>([
@@ -42,7 +38,7 @@ export const ChatPanels: React.FC<ChatPanelsProps> = ({
     setMessages((prev) => [...prev, userMessage]);
     setInputValue("");
 
-    onProcessingChange(true);
+    setIsProcessing(true);
 
     setTimeout(() => {
       const agentMessage: Message = {
@@ -51,7 +47,7 @@ export const ChatPanels: React.FC<ChatPanelsProps> = ({
         text: `已收到指令: "${userMessage.text}"`,
       };
       setMessages((prev) => [...prev, agentMessage]);
-      onProcessingChange(false);
+      setIsProcessing(false);
     }, 600);
   };
 
