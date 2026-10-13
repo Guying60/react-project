@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import { useEditorStore } from "../store/useEditorStore";
+import { CanvasStats } from "./CanvasStats";
 
 export const CanvasArea: React.FC = () => {
   const isProcessing = useEditorStore((state) => state.isProcessing);
   const scale = useEditorStore((state) => state.scale);
+  const setScale = useEditorStore((state) => state.setScale);
+
+  const formattedInfo = useMemo(() => {
+    console.log("🟢 [计算追踪] 重新计算画布参数字符串...");
+    const width = Math.round(500 * scale);
+    const height = Math.round(350 * scale);
+    return `当前视口: ${width} × ${height} px (${Math.round(scale * 100)}%)`;
+  }, [scale]);
+
+  const handleReset = useCallback(() => {
+    setScale(1);
+  }, [setScale]);
+
   return (
     <main
       style={{
@@ -49,6 +63,7 @@ export const CanvasArea: React.FC = () => {
           </div>
         )}
       </div>
+      <CanvasStats onReset={handleReset} formattedInfo={formattedInfo} />
     </main>
   );
 };
