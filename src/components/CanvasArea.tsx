@@ -3,7 +3,7 @@ import { useEditorStore } from "../store/useEditorStore";
 
 export const CanvasArea: React.FC = () => {
   const isProcessing = useEditorStore((state) => state.isProcessing);
-
+  const scale = useEditorStore((state) => state.scale);
   return (
     <main
       style={{
@@ -24,6 +24,9 @@ export const CanvasArea: React.FC = () => {
           alignItems: "center",
           justifyContent: "center",
           color: "#9ca3af",
+          position: "relative",
+          transform: `scale(${scale})`,
+          transition: "transform 0.1s ease-out",
         }}
       >
         [画布区域：待集成 Konva Stage]
