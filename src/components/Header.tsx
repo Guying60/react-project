@@ -22,27 +22,31 @@ export const Header: React.FC<HeaderProps> = ({ title }: HeaderProps) => {
       }}
     >
       <h1 style={{ fontSize: "18px", fontWeight: 600 }}>{title}</h1>
-      <button
-        onClick={() => setScale(Math.max(0.5, scale - 0.1))}
-        style={{ padding: "4px 8px" }}
-      >
-        -
-      </button>
-      <span style={{ fontSize: "14px", minWidth: "50px", textAlign: "center" }}>
-        {Math.round(scale * 100)}%
-      </span>
-      <button
-        onClick={() => setScale(Math.min(2.0, scale + 0.1))}
-        style={{ padding: "4px 8px" }}
-      >
-        +
-      </button>
-      <button
-        onClick={() => setScale(1)}
-        style={{ padding: "4px 8px", marginLeft: "4px" }}
-      >
-        重置
-      </button>
+      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <button
+          onClick={() => setScale(Math.max(0.5, scale - 0.1))}
+          style={{ padding: "4px 8px" }}
+        >
+          -
+        </button>
+        <span
+          style={{ fontSize: "14px", minWidth: "50px", textAlign: "center" }}
+        >
+          {Math.round(scale * 100)}%
+        </span>
+        <button
+          onClick={() => setScale(Math.min(2.0, scale + 0.1))}
+          style={{ padding: "4px 8px" }}
+        >
+          +
+        </button>
+        <button
+          onClick={() => setScale(1)}
+          style={{ padding: "4px 8px", marginLeft: "4px" }}
+        >
+          重置
+        </button>
+      </div>
       <div>
         <button style={{ marginRight: "8px", padding: "6px 12px" }}>
           撤销

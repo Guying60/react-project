@@ -26,6 +26,8 @@ export const CanvasArea: React.FC = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
       <div
@@ -63,7 +65,17 @@ export const CanvasArea: React.FC = () => {
           </div>
         )}
       </div>
-      <CanvasStats onReset={handleReset} formattedInfo={formattedInfo} />
+      <div
+        style={{
+          position: "absolute",
+          bottom: "20px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 10,
+        }}
+      >
+        <CanvasStats onReset={handleReset} formattedInfo={formattedInfo} />
+      </div>
     </main>
   );
 };
